@@ -51,7 +51,6 @@ def create_sfile(arrivalP, arrivalS, date):
 min = timedelta(minutes=1)
 arrivals = open(sys.argv[1], 'r').readlines()
 starttime = UTCDateTime(2015, 01, 01)
-print range(1, int(arrivals[-2].split()[0]) + 1)
 
 
 for i in range(1, int(arrivals[-2].split()[0]) + 1):
