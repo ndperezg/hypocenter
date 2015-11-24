@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import sys
 import pexpect
 
 
@@ -8,6 +9,12 @@ reportINP=open('report.inp','w')
 print >> reportINP, "Date TimeE L E LatE LonE Dep E F Aga Nsta Rms Gap McA MlA MbA MsA MwA Fp Spec"
 print >> reportINP, "               X    X    X           X    X"
 reportINP.close()
+
+
+hypcat='./hyp.cat'
+if str(os.path.exists(hypcat)) != 'True':
+	print "Main CAT file "+hypcat+" not found"
+	sys.exit()
 
 select = pexpect.spawn('select')
 select.expect('FILENAME FOR ONE FILE, MUST BE 6 OR MORE CHARACTERS OR HAVE A .')
@@ -20,6 +27,7 @@ select.expect('RETURN TO SEARCH:')
 select.sendline('\n')
 print select.before
 select.interact()
+
 
 os.system('report select.out report.inp')
 os.system('awk \'{if (NR>1) print NR, $2*111.12, $1*111.12, $3, $4, $5}\' report.out > loc_out.dat')
